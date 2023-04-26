@@ -1,5 +1,6 @@
-import sys
 import pygame
+
+import game_functions as gf
 from settings import Settings
 from ship import Ship
 
@@ -14,14 +15,7 @@ def run_game():
 
     # Запуск основного цикла игры
     while True:
-        # Отслеживание событий клавиатуры и мыши
-        screen.fill(ai_settings.bg_color)
-        ship.blitme()
-        for event in pygame.event.get():
-            if event.type is pygame.QUIT:
-                sys.exit()
-        
-        # Отображение последнего кадра
-        pygame.display.flip()
+        gf.check_events()
+        gf.update_screen(ai_settings, screen, ship)
 
 run_game()
