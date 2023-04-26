@@ -14,9 +14,7 @@ def check_keydown_events(ship: Ship, event, ai_settings: Settings, screen: Surfa
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        if len(bullets) < ai_settings.bullets_allowed:
-            new_bullet = Bullet(ai_settings, screen, ship)
-            bullets.add(new_bullet)
+        fire_bullet(bullets, ai_settings, screen, ship)
 
 
 def check_keyup_events(ship: Ship, event):
@@ -43,3 +41,17 @@ def update_screen(ai_settings: Settings, screen: pygame.Surface, ship: Ship, bul
     for bullet in bullets:
         bullet.draw_bullet()
     pygame.display.flip()
+
+
+def update_bullets(bullets):
+    bullets.update()
+
+    for bullet in bullets.copy():
+            if bullet.rect.y < 0:
+                bullets.remove(bullet)
+
+
+def fire_bullet(bullets, ai_settings, screen, ship):
+    if len(bullets) < ai_settings.bullets_allowed:
+        new_bullet = Bullet(ai_settings, screen, ship)
+        bullets.add(new_bullet)
