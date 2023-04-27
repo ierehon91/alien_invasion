@@ -4,26 +4,26 @@ from settings import Settings
 
 class Ship:
 
-    SCALE_RATIO = 1.62
+    SCALE_RATIO = 1.191
 
     def __init__(self, screen: pygame.Surface, settings: Settings):
         self.screen = screen
         self.ai_settings = settings
 
         # Загрузка изображения корабля и получение прямоугольника
-        self.image = pygame.image.load('images/ship.png')
+        self.image = pygame.image.load('images/ship2.png')
         self.image = pygame.transform.scale(
             self.image,
             (self.ai_settings.width_ship, int(self.ai_settings.width_ship * self.SCALE_RATIO)),
             )
-        self.image.set_colorkey((0, 0, 0))
+        self.image.set_colorkey((255, 0, 0))
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
 
         # Кажый новый корабль появляется по центру внизу экрана
         self.rect.center = self.screen_rect.center
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.bottom = self.screen_rect.bottom - 20
 
         self.center = float(self.rect.centerx)
 
