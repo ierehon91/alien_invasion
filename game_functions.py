@@ -72,14 +72,22 @@ def fire_bullet(bullets, ai_settings, screen, ship):
         bullets.add(new_bullet)
 
 
+def get_number_alients_x(alien_width: float, ai_settings: Settings) -> int:
+    available_space_x = ai_settings.screen_width - (2 * alien_width)
+    return int(available_space_x / (2 * alien_width))
+
+
+def create_alien(screen: Surface, ai_settings: Settings, aliens: Group, alian_number: int):
+    alien = Alien(screen, ai_settings)
+    alien.x = alien.rect.width + 2 * alien.rect.width * alian_number
+    alien.rect.x = alien.x
+    aliens.add(alien)
+
+
 def create_fleet(screen: Surface, ai_settings: Settings, aliens: Group):
     alien = Alien(screen, ai_settings)
-    alien_widh = alien.rect.width
-    available_space_x = ai_settings.screen_width - (2 * alien_widh)
-    number_alients_x = int(available_space_x / (2 * alien_widh))
+    number_alients_x = get_number_alients_x(alien.rect.width, ai_settings)
+    
 
     for i in range(number_alients_x):
-        alien = Alien(screen, ai_settings)
-        alien.x = alien_widh + 2 * alien_widh * i
-        alien.rect.x = alien.x
-        aliens.add(alien)
+        create_alien(screen, ai_settings, aliens, i)
