@@ -77,17 +77,30 @@ def get_number_alients_x(alien_width: float, ai_settings: Settings) -> int:
     return int(available_space_x / (2 * alien_width))
 
 
-def create_alien(screen: Surface, ai_settings: Settings, aliens: Group, alian_number: int):
+def get_number_rows(alien_height: float, ship_heigt, ai_settings: Settings) -> int:
+    avialable_space_y = ai_settings.screen_height - (alien_height * 3) - ship_heigt
+    return int(avialable_space_y / (alien_height * 2))
+
+
+def create_alien(
+        screen: Surface,
+        ai_settings: Settings,
+        aliens: Group,
+        alian_number: int,
+        number_row: int
+        ):
     alien = Alien(screen, ai_settings)
     alien.x = alien.rect.width + 2 * alien.rect.width * alian_number
     alien.rect.x = alien.x
+    alien.rect.y = alien.rect.height + 2 * alien.rect.height * number_row
     aliens.add(alien)
 
 
-def create_fleet(screen: Surface, ai_settings: Settings, aliens: Group):
+def create_fleet(screen: Surface, ai_settings: Settings, aliens: Group, ship: Ship):
     alien = Alien(screen, ai_settings)
     number_alients_x = get_number_alients_x(alien.rect.width, ai_settings)
+    number_rows = get_number_rows(alien.rect.height, ship.rect.height, ai_settings)
     
-
-    for i in range(number_alients_x):
-        create_alien(screen, ai_settings, aliens, i)
+    for number_row in range(number_rows):
+        for i in range(number_alients_x):
+            create_alien(screen, ai_settings, aliens, i, number_row)
