@@ -4,7 +4,6 @@ from pygame.sprite import Group
 import game_functions as gf
 from settings import Settings
 from ship import Ship
-from alien import Alien
 
 
 def run_game():
@@ -17,13 +16,19 @@ def run_game():
 
     bullets = Group()
     aliens = Group()
+    stars = Group()
+
+    for i in range(ai_settings.count_stars_on_screen):
+        gf.create_star(screen, stars, ai_settings)
+
     gf.create_fleet(screen, ai_settings, aliens, ship)
     # Запуск основного цикла игры
     while True:
         gf.check_events(ship, ai_settings, screen, bullets)
         ship.update()
         gf.update_bullets(bullets)
-        gf.update_screen(ai_settings, screen, ship, bullets, aliens)
+        gf.update_stars(stars, screen, ai_settings)
+        gf.update_screen(ai_settings, screen, ship, bullets, aliens, stars)
 
         
 run_game()

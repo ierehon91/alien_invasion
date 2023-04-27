@@ -14,8 +14,12 @@ class Settings:
         self.bullet_speed_factor = 1
         self.bullet_width = 3
         self.bullet_height = 15
-        self.bullet_color = (230, 230, 230)
+        self.bullet_color = (0, 255, 0)
         self.bullets_allowed = 3
 
         # Парметры коробля пришельцев
         self.alien_width = 75
+
+        # Параметры звёзд на фоне
+        self.stars_speed = 0.3
+        self.count_stars_on_screen = 50

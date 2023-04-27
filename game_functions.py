@@ -1,4 +1,5 @@
 import sys
+import random
 import pygame
 from pygame import Surface
 from pygame.event import Event
@@ -8,6 +9,7 @@ from settings import Settings
 from ship import Ship
 from alien import Alien
 from bullet import Bullet
+from stars import Star
 
 
 def check_keydown_events(
@@ -49,8 +51,13 @@ def update_screen(
         ship: Ship,
         bullets: Group,
         aliens: Group,
+        stars: Group,
         ):
     screen.fill(ai_settings.bg_color)
+
+    for star in stars:
+        star.draw_star()
+
     for bullet in bullets:
         bullet.draw_bullet()
     ship.blitme()
@@ -64,6 +71,21 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
             if bullet.rect.y < 0:
                 bullets.remove(bullet)
+
+
+def create_star(screen, stars, ai_settings):
+    x = random.randint(0, ai_settings.screen_width)
+    y = random.randint(0, ai_settings.screen_height)
+    star = Star(screen, x, y, ai_settings)
+    stars.add(star)
+
+def update_stars(stars, screen, ai_settings):
+    stars.update()
+
+    for star in stars.copy():
+        if star.rect.y > ai_settings.screen_height:
+            stars.remove(star)
+            create_star(screen, stars, ai_settings)
 
 
 def fire_bullet(bullets, ai_settings, screen, ship):
