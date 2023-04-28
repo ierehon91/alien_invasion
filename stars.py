@@ -5,7 +5,6 @@ from ship import Ship
 
 
 class Star(Sprite):
-    # TODO: Исправить появление новых звёд. Координата Y должна быть быть 0
     def __init__(self, screen, x, y, ai_settings: Settings, ship: Ship):
         super().__init__()
         self.screen = screen

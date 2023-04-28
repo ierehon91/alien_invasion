@@ -81,9 +81,12 @@ def update_bullets(bullets, aliens):
     collision = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
 
-def create_star(screen, stars, ai_settings, ship):
+def create_star(screen, stars, ai_settings, ship, new_star=False):
     x = random.randint(0, ai_settings.screen_width)
-    y = random.randint(0, ai_settings.screen_height)
+    if new_star:
+        y = 0
+    else:
+        y = random.randint(0, ai_settings.screen_height)
     star = Star(screen, x, y, ai_settings, ship)
     stars.add(star)
 
@@ -93,7 +96,7 @@ def update_stars(stars, screen, ai_settings, ship):
     for star in stars.copy():
         if star.rect.y > ai_settings.screen_height:
             stars.remove(star)
-            create_star(screen, stars, ai_settings, ship)
+            create_star(screen, stars, ai_settings, ship, new_star=True)
 
 
 def fire_bullet(bullets, ai_settings, screen, ship):
