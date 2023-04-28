@@ -132,3 +132,21 @@ def create_fleet(screen: Surface, ai_settings: Settings, aliens: Group, ship: Sh
     for number_row in range(number_rows):
         for i in range(number_alients_x):
             create_alien(screen, ai_settings, aliens, i, number_row)
+
+
+def check_fleet_edgas(aliens: Group, ai_settings: Settings):
+    for alien in aliens:
+        if alien.check_edges():
+            change_fleet_direction(aliens, ai_settings)
+            break
+
+
+def change_fleet_direction(aliens: Group, ai_settings: Settings):
+    for alien in aliens:
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+def update_aliens(aliens: Group, ai_settings: Settings):
+    check_fleet_edgas(aliens, ai_settings)
+    aliens.update()
