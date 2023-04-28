@@ -71,12 +71,14 @@ def update_screen(
     pygame.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(bullets, aliens):
     bullets.update()
 
     for bullet in bullets.copy():
             if bullet.rect.y < 0:
                 bullets.remove(bullet)
+    
+    collision = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
 
 def create_star(screen, stars, ai_settings, ship):

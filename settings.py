@@ -25,4 +25,5 @@ class Settings:
 
         # Параметры звёзд на фоне
         self.stars_speed = 0.3
+        self.stars_afterbern_speed = 2
         self.count_stars_on_screen = 50
