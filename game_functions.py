@@ -71,14 +71,22 @@ def update_screen(
     pygame.display.flip()
 
 
-def update_bullets(bullets, aliens):
+def update_bullets(bullets, aliens, screen, ai_settings, ship):
     bullets.update()
 
     for bullet in bullets.copy():
             if bullet.rect.y < 0:
                 bullets.remove(bullet)
-    
+                
+    check_bullet_alien_collision(bullets, aliens, screen, ai_settings, ship)
+
+
+def check_bullet_alien_collision(bullets, aliens, screen, ai_settings, ship):
     collision = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    if len(aliens) == 0:
+        bullets.empty()
+        create_fleet(screen, ai_settings, aliens, ship)
 
 
 def create_star(screen, stars, ai_settings, ship, new_star=False):
@@ -111,7 +119,7 @@ def get_number_alients_x(alien_width: float, ai_settings: Settings) -> int:
 
 
 def get_number_rows(alien_height: float, ship_heigt, ai_settings: Settings) -> int:
-    avialable_space_y = ai_settings.screen_height - (alien_height * 3) - ship_heigt
+    avialable_space_y = ai_settings.screen_height - (alien_height * 6) - ship_heigt
     return int(avialable_space_y / (alien_height * 2))
 
 

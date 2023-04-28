@@ -20,7 +20,7 @@ class Settings:
         # Парметры коробля пришельцев
         self.alien_width = 75
         self.alien_speed_factor = 0.5
-        self.fleet_drop_speed = 15
+        self.fleet_drop_speed = 12
         self.fleet_direction = 1
 
         # Параметры звёзд на фоне

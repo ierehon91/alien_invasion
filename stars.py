@@ -8,7 +8,7 @@ class Star(Sprite):
     def __init__(self, screen, x, y, ai_settings: Settings, ship: Ship):
         super().__init__()
         self.screen = screen
-        self.rect = pygame.Rect(x, y, 1, 4)
+        self.rect = pygame.Rect(x, y, 2, 4)
         self.y = float(self.rect.y)
         self.speed = ai_settings.stars_speed
         self.stars_afterbern_speed = ai_settings.stars_afterbern_speed
