@@ -17,7 +17,8 @@ def check_keydown_events(
         event: Event,
         ai_settings: Settings,
         screen: Surface,
-        bullets: Group
+        bullets: Group,
+        stars: Group
         ):
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -25,6 +26,9 @@ def check_keydown_events(
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(bullets, ai_settings, screen, ship)
+    elif event.key == pygame.K_UP:
+        ship.is_afterburner = True
+            
 
 
 def check_keyup_events(ship: Ship, event):
@@ -32,14 +36,16 @@ def check_keyup_events(ship: Ship, event):
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
+    elif event.key == pygame.K_UP:
+        ship.is_afterburner = False
 
 
-def check_events(ship: Ship, ai_settings: Settings, screen: Surface, bullets: Group):
+def check_events(ship: Ship, ai_settings: Settings, screen: Surface, bullets: Group, stars):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(ship, event, ai_settings, screen, bullets)
+            check_keydown_events(ship, event, ai_settings, screen, bullets, stars)
         elif event.type == pygame.KEYUP:
             check_keyup_events(ship, event)
 
@@ -73,19 +79,19 @@ def update_bullets(bullets):
                 bullets.remove(bullet)
 
 
-def create_star(screen, stars, ai_settings):
+def create_star(screen, stars, ai_settings, ship):
     x = random.randint(0, ai_settings.screen_width)
     y = random.randint(0, ai_settings.screen_height)
-    star = Star(screen, x, y, ai_settings)
+    star = Star(screen, x, y, ai_settings, ship)
     stars.add(star)
 
-def update_stars(stars, screen, ai_settings):
+def update_stars(stars, screen, ai_settings, ship):
     stars.update()
 
     for star in stars.copy():
         if star.rect.y > ai_settings.screen_height:
             stars.remove(star)
-            create_star(screen, stars, ai_settings)
+            create_star(screen, stars, ai_settings, ship)
 
 
 def fire_bullet(bullets, ai_settings, screen, ship):

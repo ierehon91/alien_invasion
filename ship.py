@@ -30,6 +30,8 @@ class Ship:
         self.moving_right = False
         self.moving_left = False
 
+        self.is_afterburner = False
+
     def blitme(self):
         """Рисует корабль в текущей позиции"""
         self.screen.blit(self.image, self.rect)
